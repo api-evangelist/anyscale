@@ -1,0 +1,29 @@
+aid: anyscale
+url: https://raw.githubusercontent.com/api-evangelist/anyscale/refs/heads/main/apis.yml
+name: Anyscale
+x-type: company
+description: >-
+  Anyscale provides a managed Ray platform for distributed Python, ML training, and large-scale inference. Built by the creators of Ray, the platform exposes APIs for cluster management, jobs, and model serving.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI
+  - Distributed Computing
+  - Ray
+  - ML Platform
+  - Inference
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://www.anyscale.com/
+  - type: Plans
+    url: plans/anyscale-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/anyscale-rate-limits.yml
+  - type: FinOps
+    url: finops/anyscale-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
