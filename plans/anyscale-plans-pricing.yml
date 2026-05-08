@@ -5,38 +5,165 @@ provider: Anyscale
 providerId: anyscale
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - Distributed Computing
 - Ray
 - ML Platform
 - Inference
+- GPU
 - Plans
-description: Placeholder plans/pricing artifact for Anyscale. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+description: >-
+  Anyscale uses a usage-based pay-as-you-go model billed in compute instance
+  hours, with rates that vary by GPU type. Two delivery modes are offered -
+  Hosted (monthly credit-card invoicing, business-hours support) and Bring
+  Your Own Cloud (BYOC) (invoiced via cloud marketplaces, 24/7 support, can
+  consume customer GPU reservations). New users receive $100 in free credits;
+  committed contracts unlock volume discounts.
+notes: >-
+  Hosted hourly rates apply to Anyscale-managed compute. In BYOC, Anyscale
+  charges a platform fee per instance hour on top of the customer's
+  cloud-provider compute spend - exact BYOC rate is contract-dependent.
 sources:
-- https://www.anyscale.com/
+- https://www.anyscale.com/pricing
+- https://docs.anyscale.com/
 plans:
-- id: anyscale-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers (Free / Pro / Enterprise / pay-as-you-go,
-    etc.) once pricing is reconciled.
+- id: anyscale-hosted
+  name: Hosted (Pay-as-you-go)
+  type: usage
+  description: >-
+    Anyscale-managed compute on AWS / GCP, billed per instance-hour by node
+    type with monthly credit-card invoicing and business-hours support.
   entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
+  - label: CPU Only (per hour)
+    name: cpu_only
+    type: usage
+    metric: hours
     limit: -1
-    timeFrame: usage
+    timeFrame: month
     geo: global
     unit: 1
-    price: see https://www.anyscale.com/
+    price: $0.0135 per hour
+    userMultiplied: false
+  - label: NVIDIA T4 (per hour)
+    name: gpu_t4
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.5682 per hour
+    userMultiplied: false
+  - label: NVIDIA L4 (per hour)
+    name: gpu_l4
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.9542 per hour
+    userMultiplied: false
+  - label: NVIDIA A10G (per hour)
+    name: gpu_a10g
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $1.3635 per hour
+    userMultiplied: false
+  - label: NVIDIA A100 (per hour)
+    name: gpu_a100
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $4.9591 per hour
+    userMultiplied: false
+  - label: NVIDIA H100 (per hour)
+    name: gpu_h100
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $9.2880 per hour
+    userMultiplied: false
+  - label: NVIDIA H200 (per hour)
+    name: gpu_h200
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $10.6812 per hour
     userMultiplied: false
   elements:
-  - name: Pending Reconciliation
+  - name: Workspaces
+  - name: Jobs
+  - name: Services
+  - name: Clusters
+- id: anyscale-byoc
+  name: Bring Your Own Cloud (BYOC)
+  type: enterprise
+  description: >-
+    Anyscale runs the control plane while compute lives in the customer's
+    AWS / GCP account, leveraging existing GPU reservations. Invoiced via
+    cloud marketplaces with 24/7 support.
+  entries:
+  - label: Anyscale Platform Fee
+    name: byoc_platform_fee
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per instance-hour, contract-dependent (contact sales)
+    userMultiplied: false
+  - label: Underlying Cloud Compute
+    name: byoc_cloud_compute
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: billed by AWS / GCP at customer's rates
+    userMultiplied: false
+  elements:
+  - name: 24/7 Support
+  - name: GPU Reservation Reuse
+  - name: Marketplace Billing
+- id: anyscale-enterprise
+  name: Enterprise / Committed
+  type: enterprise
+  description: >-
+    Volume commitments unlock discounts on hosted hourly rates and BYOC
+    platform fees. Contact Anyscale sales.
+  entries:
+  - label: Committed Spend
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales (volume discount)
+    userMultiplied: false
+  elements:
+  - name: Volume Discount
+  - name: SLAs
+  - name: Custom Onboarding
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

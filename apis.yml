@@ -3,7 +3,7 @@ url: https://raw.githubusercontent.com/api-evangelist/anyscale/refs/heads/main/a
 name: Anyscale
 x-type: company
 description: >-
-  Anyscale provides a managed Ray platform for distributed Python, ML training, and large-scale inference. Built by the creators of Ray, the platform exposes APIs for cluster management, jobs, and model serving.
+  Anyscale provides a managed Ray platform for distributed Python, ML training, and large-scale inference. Built by the creators of Ray, the Anyscale Platform API and CLI expose programmatic control over workspaces, jobs, services, clusters, compute configurations, container images, and clouds (Hosted and Bring-Your-Own-Cloud).
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - AI
@@ -11,13 +11,152 @@ tags:
   - Ray
   - ML Platform
   - Inference
+  - GPU
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: anyscale:anyscale-workspaces-api
+    name: Anyscale Workspaces API
+    tags:
+      - Workspaces
+      - Development
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/workspaces/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/workspaces/
+        type: Documentation
+    description: >-
+      Manages Anyscale Workspaces - cloud-hosted, GPU-backed development environments preconfigured with Ray for interactive development and debugging.
+  - aid: anyscale:anyscale-jobs-api
+    name: Anyscale Jobs API
+    tags:
+      - Jobs
+      - Batch
+      - Training
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/jobs/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/jobs/
+        type: Documentation
+    description: >-
+      Submits, monitors, and manages Ray Jobs - one-off or scheduled batch runs of Python applications on managed Ray clusters.
+  - aid: anyscale:anyscale-services-api
+    name: Anyscale Services API
+    tags:
+      - Services
+      - Serving
+      - Inference
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/services/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/services/
+        type: Documentation
+    description: >-
+      Deploys and manages production Ray Serve applications as long-running, autoscaling, multi-version services with traffic-shifted rollouts and HTTP/gRPC ingress.
+  - aid: anyscale:anyscale-clusters-api
+    name: Anyscale Clusters API
+    tags:
+      - Clusters
+      - Compute
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/clusters/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/clusters/
+        type: Documentation
+    description: >-
+      Provisions and manages Ray clusters - autoscaling fleets of CPU / GPU nodes underlying Workspaces, Jobs, and Services.
+  - aid: anyscale:anyscale-compute-configs-api
+    name: Anyscale Compute Configs API
+    tags:
+      - Compute Configurations
+      - Templates
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/compute-configs/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/compute-configs/
+        type: Documentation
+    description: >-
+      Defines reusable compute templates (head node type, worker types, autoscaling, AWS/GCP region) for clusters, workspaces, jobs, and services.
+  - aid: anyscale:anyscale-container-images-api
+    name: Anyscale Container Images API
+    tags:
+      - Images
+      - Containers
+      - Environments
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/container-images/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/container-images/
+        type: Documentation
+    description: >-
+      Builds, tags, and manages container images that bundle Python, system, and Ray dependencies for reproducible runtime environments.
+  - aid: anyscale:anyscale-clouds-api
+    name: Anyscale Clouds API
+    tags:
+      - Clouds
+      - BYOC
+      - Infrastructure
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/clouds/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/clouds/
+        type: Documentation
+    description: >-
+      Manages Hosted and Bring-Your-Own-Cloud (BYOC) cloud connections to AWS and GCP accounts where Anyscale provisions Ray clusters.
+  - aid: anyscale:anyscale-projects-api
+    name: Anyscale Projects API
+    tags:
+      - Projects
+      - Organization
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/platform/projects/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/platform/projects/
+        type: Documentation
+    description: >-
+      Groups workspaces, jobs, services, and resources into projects with shared access controls, dashboards, and quotas.
+  - aid: anyscale:anyscale-organizations-api
+    name: Anyscale Organizations API
+    tags:
+      - Organizations
+      - IAM
+      - Billing
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/administration/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/administration/
+        type: Documentation
+    description: >-
+      Manages organizations, users, roles, IAM, and billing relationships at the tenancy level.
+  - aid: anyscale:anyscale-logs-api
+    name: Anyscale Logs and Monitoring API
+    tags:
+      - Logs
+      - Monitoring
+      - Observability
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.anyscale.com/monitoring/
+    baseURL: https://console.anyscale.com/api/v2
+    properties:
+      - url: https://docs.anyscale.com/monitoring/
+        type: Documentation
+    description: >-
+      Retrieves cluster, job, and service logs, metrics, and Ray dashboard data for observability and debugging.
 common:
   - type: Website
     url: https://www.anyscale.com/
+  - type: Documentation
+    url: https://docs.anyscale.com/
   - type: Plans
     url: plans/anyscale-plans-pricing.yml
   - type: RateLimits

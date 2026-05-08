@@ -15,22 +15,48 @@ tags:
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for Anyscale. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+description: >-
+  Anyscale is a control-plane API for managing Ray compute. Throughput limits
+  primarily come from the underlying cloud quotas (per-region instance and GPU
+  quotas in the customer's AWS / GCP account or Anyscale's hosted account).
+  Control-plane API call rates are not publicly documented and are pending
+  reconciliation; service-level rate limits on Ray Serve services are
+  controlled by user code and autoscaling configuration.
+notes: >-
+  Pending reconciliation against Anyscale's published API rate limits.
+  Practical limits are determined by cloud-provider GPU quotas and per-org
+  instance caps.
 sources:
-- https://www.anyscale.com/
+- https://docs.anyscale.com/
+- https://www.anyscale.com/pricing
 responseCodes:
   throttled: 429
 limits:
-- name: Default
-  scope: account
-  metric: varies
+- name: Control-Plane API
+  scope: organization
+  metric: requests
   limit: see provider documentation
   notes: Pending reconciliation.
+- name: Concurrent Workspaces / Jobs / Services
+  scope: organization
+  metric: concurrent
+  limit: bounded by cloud quotas and org limits
+  notes: Practical concurrency is bounded by AWS / GCP instance and GPU quotas.
+- name: Cluster Node Counts
+  scope: cluster
+  metric: nodes
+  limit: bounded by autoscaling and cloud quotas
+  notes: Configured per compute config and bounded by cloud GPU quotas.
+- name: Service Endpoint
+  scope: service
+  metric: requests
+  limit: user-configured
+  notes: Throughput on deployed Ray Serve services is controlled by application autoscaling.
 policies:
 - name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  description: Clients should implement exponential backoff with jitter and honor Retry-After.
+- name: Cloud Quota Management
+  description: Request AWS / GCP quota increases ahead of large training or inference rollouts.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
