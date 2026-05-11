@@ -163,6 +163,38 @@ common:
     url: rate-limits/anyscale-rate-limits.yml
   - type: FinOps
     url: finops/anyscale-finops.yml
+  - type: Integrations
+    url: https://www.anyscale.com/integrations
+integrations:
+  - name: cloud-database-hidden-layer
+  - name: cloud-database-redis
+  - name: cloud-database-databricks
+  - name: cloud-database-snowflake
+  - name: perfect
+  - name: airflow-logo
+  - name: dagster_2
+  - name: hugging-face
+  - name: lightning-logo
+  - name: pytorch-logo
+  - name: keras
+  - name: data-framework-hudi
+  - name: data-framework-iceberg
+  - name: delta-logo
+  - name: pyarrow
+  - name: datadog
+  - name: arize
+  - name: mlflow
+  - name: weights-bases
+  - name: vercel-logotype-dark
+  - name: streamlit
+  - name: gradio
+  - name: llm-app-orchestration-hidden-layer
+  - name: llm-app-orchestration-protect-ai
+  - name: hidden-layer
+  - name: protect-ai
+  - name: lakera
+  - name: prompt-security
+  - name: guardrails
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
