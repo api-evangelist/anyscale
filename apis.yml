@@ -1,7 +1,7 @@
 aid: anyscale
 url: https://raw.githubusercontent.com/api-evangelist/anyscale/refs/heads/main/apis.yml
 name: Anyscale
-x-type: company
+kind: company
 description: >-
   Anyscale provides a managed Ray platform for distributed Python, ML training, and large-scale inference. Built by the creators of Ray, the Anyscale Platform API and CLI expose programmatic control over workspaces, jobs, services, clusters, compute configurations, container images, and clouds (Hosted and Bring-Your-Own-Cloud).
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
