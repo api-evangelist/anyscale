@@ -153,6 +153,10 @@ apis:
     description: >-
       Retrieves cluster, job, and service logs, metrics, and Ray dashboard data for observability and debugging.
 common:
+  - type: GitHubOrganization
+    url: https://github.com/anyscale
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/joinanyscale
   - type: Website
     url: https://www.anyscale.com/
   - type: Documentation
