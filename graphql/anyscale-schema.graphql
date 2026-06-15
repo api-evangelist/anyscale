@@ -1,0 +1,1311 @@
+"""
+Anyscale GraphQL Schema
+Derived from the Anyscale Platform REST API covering workspaces, jobs, services,
+clusters, compute configurations, container images, clouds, projects, organizations,
+logs, and LLM endpoints.
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar Upload
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum WorkspaceStatus {
+  STARTING
+  RUNNING
+  STOPPING
+  STOPPED
+  ERROR
+  PENDING
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+  STOPPED
+  TERMINATED
+}
+
+enum ServiceStatus {
+  STARTING
+  RUNNING
+  UPDATING
+  SCALING
+  TERMINATING
+  TERMINATED
+  ERROR
+  UNHEALTHY
+}
+
+enum ClusterStatus {
+  STARTING
+  RUNNING
+  UPDATING
+  TERMINATING
+  TERMINATED
+  ERROR
+}
+
+enum CloudProvider {
+  AWS
+  GCP
+  AZURE
+}
+
+enum CloudType {
+  HOSTED
+  BYOC
+}
+
+enum ImageBuildStatus {
+  PENDING
+  BUILDING
+  SUCCEEDED
+  FAILED
+}
+
+enum NodeInstanceType {
+  CPU
+  GPU
+  TPU
+}
+
+enum LogLevel {
+  DEBUG
+  INFO
+  WARNING
+  ERROR
+  CRITICAL
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+enum RolloutStrategy {
+  CANARY
+  BLUE_GREEN
+  ROLLING
+  IMMEDIATE
+}
+
+enum AuthProvider {
+  GOOGLE
+  GITHUB
+  SAML
+  OKTA
+  AZURE_AD
+}
+
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+  BILLING_ADMIN
+}
+
+enum ProjectRole {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+enum ResourceType {
+  WORKSPACE
+  JOB
+  SERVICE
+  CLUSTER
+  COMPUTE_CONFIG
+  CONTAINER_IMAGE
+  CLOUD
+  PROJECT
+}
+
+enum HealthStatus {
+  HEALTHY
+  UNHEALTHY
+  DEGRADED
+  UNKNOWN
+}
+
+enum ScalingPolicy {
+  FIXED
+  AUTOSCALING
+}
+
+enum FineTuneStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+}
+
+enum ModelType {
+  BASE
+  FINE_TUNED
+  INSTRUCTION_TUNED
+}
+
+enum EndpointStatus {
+  PENDING
+  ACTIVE
+  UPDATING
+  DELETING
+  ERROR
+}
+
+# ─────────────────────────────────────────────
+# Pagination
+# ─────────────────────────────────────────────
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+  totalCount: Int!
+}
+
+# ─────────────────────────────────────────────
+# Core Entity Types
+# ─────────────────────────────────────────────
+
+type Organization {
+  id: ID!
+  name: String!
+  slug: String!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  members: [OrganizationMember!]!
+  projects: [Project!]!
+  clouds: [Cloud!]!
+  quotas: ResourceQuota
+  billingInfo: BillingInfo
+  ssoConfig: SSOConfig
+}
+
+type OrganizationMember {
+  id: ID!
+  user: User!
+  role: OrganizationRole!
+  joinedAt: DateTime!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  avatarUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  organizationRoles: [OrganizationRole!]!
+  projectRoles: [ProjectMember!]!
+  apiKeys: [ApiKey!]!
+}
+
+type ApiKey {
+  id: ID!
+  name: String!
+  prefix: String!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  lastUsedAt: DateTime
+  scopes: [String!]!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  description: String
+  organizationId: ID!
+  organization: Organization!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  members: [ProjectMember!]!
+  workspaces: WorkspaceConnection!
+  jobs: JobConnection!
+  services: ServiceConnection!
+  tags: [String!]!
+}
+
+type ProjectMember {
+  id: ID!
+  user: User!
+  role: ProjectRole!
+  joinedAt: DateTime!
+}
+
+type Cloud {
+  id: ID!
+  name: String!
+  provider: CloudProvider!
+  type: CloudType!
+  region: String!
+  organizationId: ID!
+  status: HealthStatus!
+  config: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  clusters: [Cluster!]!
+}
+
+type ComputeConfig {
+  id: ID!
+  name: String!
+  description: String
+  organizationId: ID!
+  projectId: ID
+  headNodeType: NodeConfig!
+  workerNodeTypes: [WorkerNodeConfig!]!
+  cloudId: ID
+  cloud: Cloud
+  scalingPolicy: ScalingPolicy!
+  minWorkers: Int
+  maxWorkers: Int
+  region: String
+  availabilityZones: [String!]
+  isDefault: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type NodeConfig {
+  instanceType: String!
+  resources: NodeResources!
+  diskSizeGb: Int
+  spotEnabled: Boolean!
+}
+
+type WorkerNodeConfig {
+  instanceType: String!
+  resources: NodeResources!
+  minWorkers: Int!
+  maxWorkers: Int!
+  spotEnabled: Boolean!
+  gpuType: String
+}
+
+type NodeResources {
+  cpu: Float!
+  memory: Float!
+  gpu: Float
+  gpuType: String
+  acceleratorType: String
+}
+
+type ContainerImage {
+  id: ID!
+  name: String!
+  tag: String!
+  digest: String
+  registryUrl: String!
+  organizationId: ID!
+  projectId: ID
+  buildStatus: ImageBuildStatus!
+  baseImage: String
+  pythonVersion: String
+  rayVersion: String!
+  packages: [String!]!
+  envVars: [EnvVar!]!
+  buildLogs: String
+  sizeBytes: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type EnvVar {
+  name: String!
+  value: String
+  secret: Boolean!
+}
+
+type Cluster {
+  id: ID!
+  name: String!
+  status: ClusterStatus!
+  computeConfigId: ID
+  computeConfig: ComputeConfig
+  containerImageId: ID
+  containerImage: ContainerImage
+  cloudId: ID!
+  cloud: Cloud!
+  projectId: ID
+  project: Project
+  headNode: ClusterNode
+  workerNodes: [ClusterNode!]!
+  rayDashboardUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  terminatedAt: DateTime
+}
+
+type ClusterNode {
+  id: ID!
+  instanceType: String!
+  region: String!
+  availabilityZone: String!
+  ipAddress: String
+  status: String!
+  resources: NodeResources!
+  isHead: Boolean!
+  startedAt: DateTime
+}
+
+type Workspace {
+  id: ID!
+  name: String!
+  description: String
+  status: WorkspaceStatus!
+  projectId: ID!
+  project: Project!
+  computeConfigId: ID
+  computeConfig: ComputeConfig
+  containerImageId: ID
+  containerImage: ContainerImage
+  clusterId: ID
+  cluster: Cluster
+  jupyterUrl: String
+  vscodeUrl: String
+  gitRepo: String
+  gitBranch: String
+  envVars: [EnvVar!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  lastActiveAt: DateTime
+  createdBy: User!
+}
+
+type Job {
+  id: ID!
+  name: String!
+  description: String
+  status: JobStatus!
+  projectId: ID!
+  project: Project!
+  computeConfigId: ID
+  computeConfig: ComputeConfig
+  containerImageId: ID
+  containerImage: ContainerImage
+  clusterId: ID
+  cluster: Cluster
+  entrypoint: String!
+  workingDir: String
+  runtimeEnv: JSON
+  numCpus: Float
+  numGpus: Float
+  memoryGb: Float
+  maxRetries: Int!
+  scheduleExpression: String
+  submittedBy: User!
+  startedAt: DateTime
+  completedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  logs: [LogEntry!]!
+  metrics: JobMetrics
+}
+
+type JobMetrics {
+  cpuUtilization: Float
+  memoryUtilizationGb: Float
+  gpuUtilization: Float
+  durationSeconds: Int
+}
+
+type Service {
+  id: ID!
+  name: String!
+  description: String
+  status: ServiceStatus!
+  projectId: ID!
+  project: Project!
+  computeConfigId: ID
+  computeConfig: ComputeConfig
+  containerImageId: ID
+  containerImage: ContainerImage
+  applicationConfig: JSON!
+  serveConfigPath: String
+  ingressUrl: String
+  numReplicas: Int!
+  minReplicas: Int
+  maxReplicas: Int
+  scalingPolicy: ScalingPolicy!
+  currentVersion: ServiceVersion
+  versions: [ServiceVersion!]!
+  rolloutStrategy: RolloutStrategy!
+  trafficPolicy: TrafficPolicy
+  healthCheck: HealthCheckConfig
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy: User!
+}
+
+type ServiceVersion {
+  id: ID!
+  serviceId: ID!
+  version: String!
+  containerImageId: ID!
+  containerImage: ContainerImage!
+  applicationConfig: JSON!
+  trafficWeight: Float!
+  status: ServiceStatus!
+  deployedAt: DateTime!
+  deployedBy: User!
+}
+
+type TrafficPolicy {
+  versions: [VersionTraffic!]!
+}
+
+type VersionTraffic {
+  versionId: ID!
+  weight: Float!
+}
+
+type HealthCheckConfig {
+  path: String!
+  port: Int!
+  intervalSeconds: Int!
+  timeoutSeconds: Int!
+  healthyThreshold: Int!
+  unhealthyThreshold: Int!
+}
+
+type LogEntry {
+  timestamp: DateTime!
+  level: LogLevel!
+  message: String!
+  source: String
+  resourceId: ID
+  resourceType: ResourceType
+}
+
+type ResourceQuota {
+  maxCpu: Float
+  maxMemoryGb: Float
+  maxGpu: Float
+  maxWorkspaces: Int
+  maxJobs: Int
+  maxServices: Int
+  maxClusters: Int
+}
+
+type BillingInfo {
+  plan: String!
+  currentPeriodStart: DateTime!
+  currentPeriodEnd: DateTime!
+  estimatedCostUsd: Float
+  creditsRemaining: Float
+}
+
+type SSOConfig {
+  provider: AuthProvider!
+  domain: String!
+  isEnabled: Boolean!
+  metadataUrl: String
+}
+
+# ─────────────────────────────────────────────
+# LLM Endpoint Types
+# ─────────────────────────────────────────────
+
+type LLMEndpoint {
+  id: ID!
+  name: String!
+  modelId: String!
+  model: LLMModel
+  status: EndpointStatus!
+  organizationId: ID!
+  projectId: ID
+  serviceUrl: String
+  contextWindow: Int
+  maxTokens: Int
+  numReplicas: Int!
+  scalingPolicy: ScalingPolicy!
+  computeConfigId: ID
+  computeConfig: ComputeConfig
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LLMModel {
+  id: ID!
+  name: String!
+  provider: String!
+  type: ModelType!
+  contextWindow: Int!
+  maxOutputTokens: Int
+  description: String
+  tags: [String!]!
+  isAvailable: Boolean!
+  baseModelId: String
+  fineTuneJob: FineTuneJob
+}
+
+type FineTuneJob {
+  id: ID!
+  name: String!
+  status: FineTuneStatus!
+  baseModelId: String!
+  baseModel: LLMModel
+  organizationId: ID!
+  projectId: ID
+  trainingDataUrl: String!
+  validationDataUrl: String
+  hyperparameters: FineTuneHyperparameters
+  resultModelId: String
+  resultModel: LLMModel
+  metrics: FineTuneMetrics
+  computeConfigId: ID
+  createdAt: DateTime!
+  startedAt: DateTime
+  completedAt: DateTime
+  createdBy: User!
+}
+
+type FineTuneHyperparameters {
+  epochs: Int
+  learningRate: Float
+  batchSize: Int
+  warmupSteps: Int
+  loraRank: Int
+  loraAlpha: Float
+}
+
+type FineTuneMetrics {
+  trainLoss: Float
+  validationLoss: Float
+  trainTokensPerSecond: Float
+  totalTrainSteps: Int
+  epochsCompleted: Int
+}
+
+type ChatCompletion {
+  id: ID!
+  model: String!
+  choices: [ChatChoice!]!
+  usage: TokenUsage!
+  createdAt: DateTime!
+}
+
+type ChatChoice {
+  index: Int!
+  message: ChatMessage!
+  finishReason: String
+}
+
+type ChatMessage {
+  role: String!
+  content: String!
+}
+
+type TokenUsage {
+  promptTokens: Int!
+  completionTokens: Int!
+  totalTokens: Int!
+}
+
+type Embedding {
+  index: Int!
+  embedding: [Float!]!
+  object: String!
+}
+
+type EmbeddingResponse {
+  model: String!
+  data: [Embedding!]!
+  usage: TokenUsage!
+}
+
+# ─────────────────────────────────────────────
+# Connection / Pagination Types
+# ─────────────────────────────────────────────
+
+type WorkspaceConnection {
+  edges: [WorkspaceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type WorkspaceEdge {
+  node: Workspace!
+  cursor: String!
+}
+
+type JobConnection {
+  edges: [JobEdge!]!
+  pageInfo: PageInfo!
+}
+
+type JobEdge {
+  node: Job!
+  cursor: String!
+}
+
+type ServiceConnection {
+  edges: [ServiceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ServiceEdge {
+  node: Service!
+  cursor: String!
+}
+
+type ClusterConnection {
+  edges: [ClusterEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ClusterEdge {
+  node: Cluster!
+  cursor: String!
+}
+
+type ComputeConfigConnection {
+  edges: [ComputeConfigEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ComputeConfigEdge {
+  node: ComputeConfig!
+  cursor: String!
+}
+
+type ContainerImageConnection {
+  edges: [ContainerImageEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ContainerImageEdge {
+  node: ContainerImage!
+  cursor: String!
+}
+
+type LLMEndpointConnection {
+  edges: [LLMEndpointEdge!]!
+  pageInfo: PageInfo!
+}
+
+type LLMEndpointEdge {
+  node: LLMEndpoint!
+  cursor: String!
+}
+
+type FineTuneJobConnection {
+  edges: [FineTuneJobEdge!]!
+  pageInfo: PageInfo!
+}
+
+type FineTuneJobEdge {
+  node: FineTuneJob!
+  cursor: String!
+}
+
+type LogEntryConnection {
+  edges: [LogEntryEdge!]!
+  pageInfo: PageInfo!
+}
+
+type LogEntryEdge {
+  node: LogEntry!
+  cursor: String!
+}
+
+# ─────────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────────
+
+input CreateWorkspaceInput {
+  name: String!
+  description: String
+  projectId: ID!
+  computeConfigId: ID
+  containerImageId: ID
+  gitRepo: String
+  gitBranch: String
+  envVars: [EnvVarInput!]
+}
+
+input UpdateWorkspaceInput {
+  name: String
+  description: String
+  computeConfigId: ID
+  containerImageId: ID
+  envVars: [EnvVarInput!]
+}
+
+input CreateJobInput {
+  name: String!
+  description: String
+  projectId: ID!
+  entrypoint: String!
+  workingDir: String
+  computeConfigId: ID
+  containerImageId: ID
+  runtimeEnv: JSON
+  numCpus: Float
+  numGpus: Float
+  memoryGb: Float
+  maxRetries: Int
+  scheduleExpression: String
+  envVars: [EnvVarInput!]
+}
+
+input UpdateJobInput {
+  name: String
+  description: String
+  scheduleExpression: String
+  maxRetries: Int
+}
+
+input CreateServiceInput {
+  name: String!
+  description: String
+  projectId: ID!
+  computeConfigId: ID
+  containerImageId: ID!
+  applicationConfig: JSON!
+  serveConfigPath: String
+  numReplicas: Int
+  minReplicas: Int
+  maxReplicas: Int
+  scalingPolicy: ScalingPolicy
+  rolloutStrategy: RolloutStrategy
+  healthCheck: HealthCheckConfigInput
+  envVars: [EnvVarInput!]
+}
+
+input UpdateServiceInput {
+  name: String
+  description: String
+  containerImageId: ID
+  applicationConfig: JSON
+  numReplicas: Int
+  minReplicas: Int
+  maxReplicas: Int
+  rolloutStrategy: RolloutStrategy
+  healthCheck: HealthCheckConfigInput
+}
+
+input CreateClusterInput {
+  name: String!
+  projectId: ID
+  computeConfigId: ID!
+  containerImageId: ID
+  cloudId: ID!
+  envVars: [EnvVarInput!]
+}
+
+input CreateComputeConfigInput {
+  name: String!
+  description: String
+  projectId: ID
+  headNodeType: NodeConfigInput!
+  workerNodeTypes: [WorkerNodeConfigInput!]!
+  cloudId: ID
+  scalingPolicy: ScalingPolicy
+  minWorkers: Int
+  maxWorkers: Int
+  region: String
+  availabilityZones: [String!]
+}
+
+input UpdateComputeConfigInput {
+  name: String
+  description: String
+  workerNodeTypes: [WorkerNodeConfigInput!]
+  scalingPolicy: ScalingPolicy
+  minWorkers: Int
+  maxWorkers: Int
+}
+
+input NodeConfigInput {
+  instanceType: String!
+  diskSizeGb: Int
+  spotEnabled: Boolean
+}
+
+input WorkerNodeConfigInput {
+  instanceType: String!
+  minWorkers: Int!
+  maxWorkers: Int!
+  spotEnabled: Boolean
+  gpuType: String
+}
+
+input CreateContainerImageInput {
+  name: String!
+  tag: String!
+  projectId: ID
+  baseImage: String!
+  pythonVersion: String
+  packages: [String!]
+  envVars: [EnvVarInput!]
+  buildArgs: JSON
+}
+
+input CreateCloudInput {
+  name: String!
+  provider: CloudProvider!
+  type: CloudType!
+  region: String!
+  config: JSON
+}
+
+input UpdateCloudInput {
+  name: String
+  config: JSON
+}
+
+input CreateProjectInput {
+  name: String!
+  description: String
+  organizationId: ID!
+  tags: [String!]
+}
+
+input UpdateProjectInput {
+  name: String
+  description: String
+  tags: [String!]
+}
+
+input InviteOrganizationMemberInput {
+  email: String!
+  role: OrganizationRole!
+}
+
+input UpdateOrganizationMemberRoleInput {
+  userId: ID!
+  role: OrganizationRole!
+}
+
+input CreateApiKeyInput {
+  name: String!
+  expiresAt: DateTime
+  scopes: [String!]
+}
+
+input CreateLLMEndpointInput {
+  name: String!
+  modelId: String!
+  projectId: ID
+  numReplicas: Int
+  scalingPolicy: ScalingPolicy
+  computeConfigId: ID
+  contextWindow: Int
+  maxTokens: Int
+}
+
+input UpdateLLMEndpointInput {
+  name: String
+  numReplicas: Int
+  scalingPolicy: ScalingPolicy
+  maxTokens: Int
+}
+
+input CreateFineTuneJobInput {
+  name: String!
+  baseModelId: String!
+  projectId: ID
+  trainingDataUrl: String!
+  validationDataUrl: String
+  hyperparameters: FineTuneHyperparametersInput
+  computeConfigId: ID
+}
+
+input FineTuneHyperparametersInput {
+  epochs: Int
+  learningRate: Float
+  batchSize: Int
+  warmupSteps: Int
+  loraRank: Int
+  loraAlpha: Float
+}
+
+input ChatCompletionInput {
+  endpointId: ID!
+  messages: [ChatMessageInput!]!
+  maxTokens: Int
+  temperature: Float
+  topP: Float
+  stream: Boolean
+  stop: [String!]
+}
+
+input ChatMessageInput {
+  role: String!
+  content: String!
+}
+
+input EmbeddingInput {
+  endpointId: ID!
+  input: [String!]!
+  model: String
+}
+
+input EnvVarInput {
+  name: String!
+  value: String!
+  secret: Boolean
+}
+
+input HealthCheckConfigInput {
+  path: String!
+  port: Int!
+  intervalSeconds: Int
+  timeoutSeconds: Int
+  healthyThreshold: Int
+  unhealthyThreshold: Int
+}
+
+input LogFilterInput {
+  resourceId: ID
+  resourceType: ResourceType
+  level: LogLevel
+  startTime: DateTime
+  endTime: DateTime
+  search: String
+}
+
+input PaginationInput {
+  first: Int
+  after: String
+  last: Int
+  before: String
+}
+
+input SortInput {
+  field: String!
+  order: SortOrder!
+}
+
+input UpdateServiceTrafficInput {
+  serviceId: ID!
+  versionTraffic: [VersionTrafficInput!]!
+}
+
+input VersionTrafficInput {
+  versionId: ID!
+  weight: Float!
+}
+
+# ─────────────────────────────────────────────
+# Payload / Response Types
+# ─────────────────────────────────────────────
+
+type WorkspacePayload {
+  workspace: Workspace
+  errors: [UserError!]!
+}
+
+type JobPayload {
+  job: Job
+  errors: [UserError!]!
+}
+
+type ServicePayload {
+  service: Service
+  errors: [UserError!]!
+}
+
+type ClusterPayload {
+  cluster: Cluster
+  errors: [UserError!]!
+}
+
+type ComputeConfigPayload {
+  computeConfig: ComputeConfig
+  errors: [UserError!]!
+}
+
+type ContainerImagePayload {
+  containerImage: ContainerImage
+  errors: [UserError!]!
+}
+
+type CloudPayload {
+  cloud: Cloud
+  errors: [UserError!]!
+}
+
+type ProjectPayload {
+  project: Project
+  errors: [UserError!]!
+}
+
+type OrganizationMemberPayload {
+  member: OrganizationMember
+  errors: [UserError!]!
+}
+
+type ApiKeyPayload {
+  apiKey: ApiKey
+  rawKey: String
+  errors: [UserError!]!
+}
+
+type LLMEndpointPayload {
+  endpoint: LLMEndpoint
+  errors: [UserError!]!
+}
+
+type FineTuneJobPayload {
+  fineTuneJob: FineTuneJob
+  errors: [UserError!]!
+}
+
+type DeletePayload {
+  id: ID!
+  success: Boolean!
+  errors: [UserError!]!
+}
+
+type UserError {
+  field: String
+  message: String!
+  code: String
+}
+
+# ─────────────────────────────────────────────
+# Query Root
+# ─────────────────────────────────────────────
+
+type Query {
+  # Organization
+  organization(id: ID!): Organization
+  me: User
+
+  # Projects
+  project(id: ID!): Project
+  projects(
+    organizationId: ID!
+    pagination: PaginationInput
+    sort: SortInput
+  ): [Project!]!
+
+  # Clouds
+  cloud(id: ID!): Cloud
+  clouds(
+    organizationId: ID!
+    provider: CloudProvider
+    type: CloudType
+  ): [Cloud!]!
+
+  # Compute Configs
+  computeConfig(id: ID!): ComputeConfig
+  computeConfigs(
+    projectId: ID
+    organizationId: ID
+    pagination: PaginationInput
+    sort: SortInput
+  ): ComputeConfigConnection!
+
+  # Container Images
+  containerImage(id: ID!): ContainerImage
+  containerImages(
+    projectId: ID
+    organizationId: ID
+    buildStatus: ImageBuildStatus
+    pagination: PaginationInput
+    sort: SortInput
+  ): ContainerImageConnection!
+
+  # Clusters
+  cluster(id: ID!): Cluster
+  clusters(
+    projectId: ID
+    cloudId: ID
+    status: ClusterStatus
+    pagination: PaginationInput
+    sort: SortInput
+  ): ClusterConnection!
+
+  # Workspaces
+  workspace(id: ID!): Workspace
+  workspaces(
+    projectId: ID!
+    status: WorkspaceStatus
+    pagination: PaginationInput
+    sort: SortInput
+  ): WorkspaceConnection!
+
+  # Jobs
+  job(id: ID!): Job
+  jobs(
+    projectId: ID!
+    status: JobStatus
+    pagination: PaginationInput
+    sort: SortInput
+  ): JobConnection!
+
+  # Services
+  service(id: ID!): Service
+  services(
+    projectId: ID!
+    status: ServiceStatus
+    pagination: PaginationInput
+    sort: SortInput
+  ): ServiceConnection!
+
+  # LLM Endpoints
+  llmEndpoint(id: ID!): LLMEndpoint
+  llmEndpoints(
+    organizationId: ID
+    projectId: ID
+    status: EndpointStatus
+    pagination: PaginationInput
+  ): LLMEndpointConnection!
+
+  # LLM Models
+  llmModel(id: ID!): LLMModel
+  llmModels(
+    type: ModelType
+    provider: String
+    isAvailable: Boolean
+  ): [LLMModel!]!
+
+  # Fine-Tune Jobs
+  fineTuneJob(id: ID!): FineTuneJob
+  fineTuneJobs(
+    projectId: ID
+    organizationId: ID
+    status: FineTuneStatus
+    pagination: PaginationInput
+  ): FineTuneJobConnection!
+
+  # Logs
+  logs(
+    filter: LogFilterInput!
+    pagination: PaginationInput
+  ): LogEntryConnection!
+
+  # API Keys
+  apiKeys: [ApiKey!]!
+}
+
+# ─────────────────────────────────────────────
+# Mutation Root
+# ─────────────────────────────────────────────
+
+type Mutation {
+  # Workspace Mutations
+  createWorkspace(input: CreateWorkspaceInput!): WorkspacePayload!
+  updateWorkspace(id: ID!, input: UpdateWorkspaceInput!): WorkspacePayload!
+  startWorkspace(id: ID!): WorkspacePayload!
+  stopWorkspace(id: ID!): WorkspacePayload!
+  deleteWorkspace(id: ID!): DeletePayload!
+
+  # Job Mutations
+  createJob(input: CreateJobInput!): JobPayload!
+  updateJob(id: ID!, input: UpdateJobInput!): JobPayload!
+  stopJob(id: ID!): JobPayload!
+  retryJob(id: ID!): JobPayload!
+  deleteJob(id: ID!): DeletePayload!
+
+  # Service Mutations
+  createService(input: CreateServiceInput!): ServicePayload!
+  updateService(id: ID!, input: UpdateServiceInput!): ServicePayload!
+  rollbackService(id: ID!, versionId: ID!): ServicePayload!
+  updateServiceTraffic(input: UpdateServiceTrafficInput!): ServicePayload!
+  terminateService(id: ID!): ServicePayload!
+  deleteService(id: ID!): DeletePayload!
+
+  # Cluster Mutations
+  createCluster(input: CreateClusterInput!): ClusterPayload!
+  terminateCluster(id: ID!): ClusterPayload!
+  deleteCluster(id: ID!): DeletePayload!
+
+  # Compute Config Mutations
+  createComputeConfig(input: CreateComputeConfigInput!): ComputeConfigPayload!
+  updateComputeConfig(id: ID!, input: UpdateComputeConfigInput!): ComputeConfigPayload!
+  deleteComputeConfig(id: ID!): DeletePayload!
+
+  # Container Image Mutations
+  createContainerImage(input: CreateContainerImageInput!): ContainerImagePayload!
+  deleteContainerImage(id: ID!): DeletePayload!
+
+  # Cloud Mutations
+  createCloud(input: CreateCloudInput!): CloudPayload!
+  updateCloud(id: ID!, input: UpdateCloudInput!): CloudPayload!
+  deleteCloud(id: ID!): DeletePayload!
+
+  # Project Mutations
+  createProject(input: CreateProjectInput!): ProjectPayload!
+  updateProject(id: ID!, input: UpdateProjectInput!): ProjectPayload!
+  deleteProject(id: ID!): DeletePayload!
+  addProjectMember(projectId: ID!, userId: ID!, role: ProjectRole!): ProjectPayload!
+  removeProjectMember(projectId: ID!, userId: ID!): ProjectPayload!
+  updateProjectMemberRole(projectId: ID!, userId: ID!, role: ProjectRole!): ProjectPayload!
+
+  # Organization Mutations
+  inviteOrganizationMember(organizationId: ID!, input: InviteOrganizationMemberInput!): OrganizationMemberPayload!
+  updateOrganizationMemberRole(organizationId: ID!, input: UpdateOrganizationMemberRoleInput!): OrganizationMemberPayload!
+  removeOrganizationMember(organizationId: ID!, userId: ID!): DeletePayload!
+
+  # API Key Mutations
+  createApiKey(input: CreateApiKeyInput!): ApiKeyPayload!
+  deleteApiKey(id: ID!): DeletePayload!
+
+  # LLM Endpoint Mutations
+  createLLMEndpoint(input: CreateLLMEndpointInput!): LLMEndpointPayload!
+  updateLLMEndpoint(id: ID!, input: UpdateLLMEndpointInput!): LLMEndpointPayload!
+  deleteLLMEndpoint(id: ID!): DeletePayload!
+
+  # Fine-Tune Job Mutations
+  createFineTuneJob(input: CreateFineTuneJobInput!): FineTuneJobPayload!
+  cancelFineTuneJob(id: ID!): FineTuneJobPayload!
+  deleteFineTuneJob(id: ID!): DeletePayload!
+
+  # LLM Inference Mutations
+  chatCompletion(input: ChatCompletionInput!): ChatCompletion!
+  createEmbedding(input: EmbeddingInput!): EmbeddingResponse!
+}
+
+# ─────────────────────────────────────────────
+# Subscription Root
+# ─────────────────────────────────────────────
+
+type Subscription {
+  # Workspace Events
+  workspaceStatusChanged(id: ID!): Workspace!
+  workspaceLogs(id: ID!, level: LogLevel): LogEntry!
+
+  # Job Events
+  jobStatusChanged(id: ID!): Job!
+  jobLogs(id: ID!, level: LogLevel): LogEntry!
+
+  # Service Events
+  serviceStatusChanged(id: ID!): Service!
+  serviceHealthChanged(id: ID!): Service!
+  serviceLogs(id: ID!, level: LogLevel): LogEntry!
+
+  # Cluster Events
+  clusterStatusChanged(id: ID!): Cluster!
+  clusterNodeAdded(clusterId: ID!): ClusterNode!
+  clusterNodeRemoved(clusterId: ID!): ClusterNode!
+
+  # Container Image Build Events
+  containerImageBuildStatusChanged(id: ID!): ContainerImage!
+  containerImageBuildLogs(id: ID!): LogEntry!
+
+  # Fine-Tune Job Events
+  fineTuneJobStatusChanged(id: ID!): FineTuneJob!
+  fineTuneJobMetricsUpdated(id: ID!): FineTuneJob!
+
+  # LLM Endpoint Events
+  llmEndpointStatusChanged(id: ID!): LLMEndpoint!
+}
