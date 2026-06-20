@@ -6,7 +6,7 @@ description: Anyscale provides a managed Ray platform for distributed Python, ML
   and large-scale inference. Built by the creators of Ray, the Anyscale Platform API
   and CLI expose programmatic control over workspaces, jobs, services, clusters, compute
   configurations, container images, and clouds (Hosted and Bring-Your-Own-Cloud).
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - AI
 - Distributed Computing
@@ -23,7 +23,7 @@ apis:
   tags:
   - Workspaces
   - Development
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/workspaces/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -39,7 +39,7 @@ apis:
   - Jobs
   - Batch
   - Training
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/jobs/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -53,7 +53,7 @@ apis:
   - Services
   - Serving
   - Inference
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/services/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -67,7 +67,7 @@ apis:
   tags:
   - Clusters
   - Compute
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/clusters/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -80,7 +80,7 @@ apis:
   tags:
   - Compute Configurations
   - Templates
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/compute-configs/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -94,7 +94,7 @@ apis:
   - Images
   - Containers
   - Environments
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/container-images/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -108,7 +108,7 @@ apis:
   - Clouds
   - BYOC
   - Infrastructure
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/clouds/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -121,7 +121,7 @@ apis:
   tags:
   - Projects
   - Organization
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/platform/projects/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -135,7 +135,7 @@ apis:
   - Organizations
   - IAM
   - Billing
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/administration/
   baseURL: https://console.anyscale.com/api/v2
   properties:
@@ -149,7 +149,7 @@ apis:
   - Logs
   - Monitoring
   - Observability
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.anyscale.com/monitoring/
   baseURL: https://console.anyscale.com/api/v2
   properties:
