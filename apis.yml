@@ -174,7 +174,7 @@ common:
   url: finops/anyscale-finops.yml
 - type: Integrations
   url: https://www.anyscale.com/integrations
-- type: LLMsTxt
+- type: LlmsText
   url: https://docs.anyscale.com/llms.txt
 integrations:
 - name: cloud-database-hidden-layer
