@@ -158,6 +158,13 @@ apis:
   description: Retrieves cluster, job, and service logs, metrics, and Ray dashboard
     data for observability and debugging.
 common:
+- type: TrustCenter
+  url: security/anyscale-trust-center.yml
+- type: DomainSecurity
+  url: security/anyscale-domain-security.yml
+- name: Agent Skills
+  url: https://docs.anyscale.com/agent-skills
+  type: AgentSkills
 - type: GitHubOrganization
   url: https://github.com/anyscale
 - type: LinkedIn
