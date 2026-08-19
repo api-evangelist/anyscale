@@ -1,0 +1,163 @@
+# Anyscale Docs
+
+> Documentation for Anyscale, the platform for scaling AI and ML workloads with Ray.
+
+Anyscale docs are available as markdown. Append `.md` to any doc URL to get the markdown version.
+
+## Get started
+
+> Getting started with Anyscale: setup, configuration, and platform orientation.
+
+Key pages (see section file for all pages):
+- [Get started with Anyscale](/get-started.md): Join an Anyscale organization, set up your environment, and start using the platform for distributed AI workloads.
+- [What is Anyscale?](/get-started/what-is-anyscale.md): Learn about the core features that make the Anyscale platform.
+- [Platform architecture](/get-started/architecture.md): Understand Anyscale's dual-plane architecture with control plane orchestration and customer data plane deployment.
+
+Questions this section answers:
+- How do I get started with Anyscale?
+- What is Anyscale?
+- What is Ray?
+- How do I create my first workspace?
+
+All pages: [/get-started/llms.txt](/get-started/llms.txt)
+
+## Developers
+
+> Products and features for developers building AI applications on Anyscale.
+
+Key pages (see section file for all pages):
+- [Anyscale for developers](/overview.md): Learn about key tasks, use cases, products, and features for developers on Anyscale.
+- [What are Anyscale services?](/services.md): Learn about using Anyscale services to deploy ML and AI model serving endpoints using Ray Serve.
+- [What are Anyscale jobs?](/jobs.md): Run production batch workloads such as model training, batch inference, and data processing with Anyscale jobs.
+- [Define a Ray cluster](/configuration.md): Learn about configuring compute resources, dependencies, and other environmental settings for deploying Ray clusters on Anyscale.
+
+Questions this section answers:
+- How do I run a batch job?
+- How do I serve a model?
+- How do I manage dependencies?
+- How do I configure a Ray cluster?
+- How do I monitor my workloads?
+- How do I set up CI/CD with Anyscale?
+
+All pages: [/developers/llms.txt](/developers/llms.txt)
+
+## LLMs and agentic AI
+
+> Serving, fine-tuning, batch inference, RAG, MCP, and agents on Anyscale.
+
+Key pages (see section file for all pages):
+- [LLMs and agentic AI on Anyscale](/llm.md): Learn about LLM and agentic AI support and features on the Anyscale platform.
+- [Serve LLMs with Anyscale services](/llm/serving.md): Learn how to deploy and scale large language models in production using Ray Serve on Anyscale.
+- [Post-training for LLMs on Anyscale](/llm/fine-tuning.md): Learn how to adapt foundation models to your specific applications through continued pre-training (CPT), supervised fine-tuning, RLHF, RLVR, and parameter-efficient methods.
+- [Run LLM batch inference on Anyscale](/llm/batch-inference.md): Discover the advantages of running Ray Data LLM batch inference workloads on Anyscale.
+- [Build AI agents on Anyscale](/agents.md): Overview of building AI agents on Anyscale, including single-agent and multi-agent architectures with Ray Serve and MCP.
+
+Questions this section answers:
+- How do I deploy an LLM?
+- How do I fine-tune an LLM?
+- How do I run batch inference with LLMs?
+- What is RAG and how do I build it on Anyscale?
+- How do I deploy an MCP server?
+- How do I build an AI agent on Anyscale?
+- How do I build a multi-agent system with A2A?
+- How do I choose a GPU for LLM serving?
+- How do I benchmark my LLM deployment?
+
+All pages: [/llm/llms.txt](/llm/llms.txt)
+
+## Agent skills
+
+> Anyscale agent skills for Claude Code and Cursor: install and use AI coding agents to build, deploy, and debug Ray workloads on Anyscale.
+
+Key pages (see section file for all pages):
+- [Anyscale agent skills](/agent-skills.md): Anyscale agent skills are agent instructions for Claude Code, Cursor, Codex, and GitHub Copilot that automate the workflow for building, deploying, and debugging Ray workloads on Anyscale.
+- [Install Anyscale agent skills](/agent-skills/install.md): Prerequisites and installation instructions for Anyscale agent skills, including how to list, install, and update skills using the Anyscale CLI.
+- [Anyscale agent skills security](/agent-skills/security.md): Understand the security model for Anyscale agent skills, including permissions, blocked commands, credential handling, data privacy, confidentiality, and license terms.
+
+Questions this section answers:
+- How do I use Claude Code with Anyscale?
+- How do I use Cursor with Anyscale?
+- What Anyscale skills are available for AI coding agents?
+- How do I install Anyscale agent skills?
+- How do I deploy an LLM using an AI agent?
+- How do I run batch inference with an agent skill?
+- How do I debug a failing Anyscale workload with an AI agent?
+- How do I set up Anyscale infrastructure with an AI agent?
+
+All pages: [/agent-skills/llms.txt](/agent-skills/llms.txt)
+
+## Admins
+
+> Cloud infrastructure, access management, security, and billing for Anyscale admins.
+
+Key pages (see section file for all pages):
+- [Anyscale for admins](/admin.md): Learn about admin and organization owner tasks and products on the Anyscale platform.
+- [Introduction to Anyscale clouds](/clouds.md): Learn about Anyscale cloud options and how to configure cloud resources for AWS, Google Cloud, and Kubernetes environments.
+- [Anyscale on Kubernetes](/clouds/kubernetes.md): Overview of deploying the Anyscale operator on Kubernetes, including deployment paths, operator architecture, and requirements.
+- [User and access management](/administration/organization.md): Manage users, roles, and permissions in your Anyscale organization.
+
+Questions this section answers:
+- How do I set up Anyscale on AWS?
+- How do I set up Anyscale on Google Cloud?
+- How do I set up Anyscale on Azure?
+- How do I deploy Anyscale on Kubernetes?
+- How do I configure IAM roles for Anyscale?
+- How do I manage users and permissions?
+- How do I configure SSO?
+- How do I set up billing and budgets?
+- How do I configure machine pools?
+- How do I access secrets from my cloud provider?
+
+All pages: [/admin/llms.txt](/admin/llms.txt)
+
+## Tutorials
+
+> Hands-on tutorials for jobs, services, LLMs, data processing, and training.
+
+Key pages (see section file for all pages):
+- [Anyscale tutorials](/tutorials.md): Learn how to use Anyscale by running tutorials that model common application patterns and best practices.
+- [Get started with jobs](/tutorials/submit-a-job.md): Run your first job on Anyscale.
+- [Get started with services](/tutorials/deploy-a-service.md): Deploy your first service on Anyscale.
+- [Deploy Llama 3.1 8b](/tutorials/deploy-an-llm.md): Deploy Llama 3.1 with Ray Serve LLM.
+
+Questions this section answers:
+- How do I run my first job on Anyscale?
+- How do I deploy my first service?
+- How do I deploy an LLM on Anyscale?
+- How do I process data at scale?
+- How do I train a model on Anyscale?
+
+All pages: [/tutorials/llms.txt](/tutorials/llms.txt)
+
+## Reference
+
+> API reference, CLI and SDK documentation, release notes, and base images.
+
+Key pages (see section file for all pages):
+- [Anyscale API reference](/reference.md): Learn about the Anyscale APIs and navigate to reference documentation for the CLI and SDK.
+- [Get started with the Anyscale CLI](/reference/quickstart-cli.md): Learn how to install, authenticate, and configure the Anyscale CLI.
+- [Get started with the Anyscale SDK](/reference/quickstart-sdk.md): Learn how to install, authenticate, and use the Anyscale Python SDK.
+- [Anyscale release notes and support lifecycle](/release-notes.md): Learn about new products and features available on Anyscale, as well as the support lifecycle.
+
+Questions this section answers:
+- What CLI commands are available?
+- How do I install the Anyscale SDK?
+- What changed in the latest release?
+- What base images are available?
+- What are the API endpoints for jobs?
+- What are the API endpoints for services?
+
+All pages: [/reference/llms.txt](/reference/llms.txt)
+
+## CLI
+
+> Anyscale CLI reference, with one Markdown file per command for direct agent consumption.
+
+Questions this section answers:
+- How do I run a job from the Anyscale CLI?
+- What flags does anyscale cloud register accept?
+- How do I list all commands in the Anyscale CLI?
+- What does anyscale service deploy return?
+- What exit codes does the Anyscale CLI use?
+
+All pages: [/reference/cli/llms.txt](/reference/cli/llms.txt)
