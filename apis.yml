@@ -20,6 +20,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/anyscale.png
 tags:
+- Artificial Intelligence
+- Distributed Computing
+- Ray
+- ML Platform
+- Inference
+- GPU
+tags_raw:
 - AI
 - Distributed Computing
 - Ray
@@ -48,6 +55,10 @@ apis:
 - aid: anyscale:anyscale-jobs-api
   name: Anyscale Jobs API
   tags:
+  - Job
+  - Batch
+  - Training
+  tags_raw:
   - Jobs
   - Batch
   - Training
@@ -77,6 +88,9 @@ apis:
 - aid: anyscale:anyscale-clusters-api
   name: Anyscale Clusters API
   tags:
+  - Cluster
+  - Compute
+  tags_raw:
   - Clusters
   - Compute
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
@@ -103,6 +117,10 @@ apis:
 - aid: anyscale:anyscale-container-images-api
   name: Anyscale Container Images API
   tags:
+  - Image
+  - Containers
+  - Environments
+  tags_raw:
   - Images
   - Containers
   - Environments
@@ -131,6 +149,9 @@ apis:
 - aid: anyscale:anyscale-projects-api
   name: Anyscale Projects API
   tags:
+  - Project
+  - Organization
+  tags_raw:
   - Projects
   - Organization
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
@@ -144,6 +165,10 @@ apis:
 - aid: anyscale:anyscale-organizations-api
   name: Anyscale Organizations API
   tags:
+  - Organization
+  - IAM
+  - Billing
+  tags_raw:
   - Organizations
   - IAM
   - Billing
