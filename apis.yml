@@ -6,6 +6,17 @@ description: Anyscale provides a managed Ray platform for distributed Python, ML
   and large-scale inference. Built by the creators of Ray, the Anyscale Platform API
   and CLI expose programmatic control over workspaces, jobs, services, clusters, compute
   configurations, container images, and clouds (Hosted and Bring-Your-Own-Cloud).
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
