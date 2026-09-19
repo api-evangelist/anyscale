@@ -51,6 +51,9 @@ apis:
 - aid: anyscale:anyscale-workspaces-api
   name: Anyscale Workspaces API
   tags:
+  - Workspace
+  - Development
+  tags_raw:
   - Workspaces
   - Development
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
@@ -130,7 +133,7 @@ apis:
   tags:
   - Image
   - Containers
-  - Environments
+  - Environment
   tags_raw:
   - Images
   - Containers
@@ -177,7 +180,7 @@ apis:
   name: Anyscale Organizations API
   tags:
   - Organization
-  - IAM
+  - Identity and Access Management
   - Billing
   tags_raw:
   - Organizations
