@@ -65,8 +65,6 @@ apis:
   properties:
   - url: https://docs.anyscale.com/platform/workspaces/
     type: Documentation
-  - url: graphql/anyscale-graphql.md
-    type: GraphQL
   description: Manages Anyscale Workspaces - cloud-hosted, GPU-backed development
     environments preconfigured with Ray for interactive development and debugging.
 - aid: anyscale:anyscale-jobs-api
