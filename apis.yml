@@ -210,6 +210,8 @@ apis:
   description: Retrieves cluster, job, and service logs, metrics, and Ray dashboard
     data for observability and debugging.
 common:
+- type: Pricing
+  url: https://www.anyscale.com/pricing
 - url: https://www.anyscale.com/rss.xml
   type: BlogRSS
 - type: TrustCenter
