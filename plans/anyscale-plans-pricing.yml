@@ -56,3 +56,65 @@ plans:
 rate_limit_statements:
 - 5 case submissions
 - Unlimited case submissions
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  units:
+  - compute
+  plans:
+  - name: CPU Only
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: NVIDIA T4
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: NVIDIA L4
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: NVIDIA A10G
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: NVIDIA A100
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: NVIDIA H/B/GB GPU families
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Committed contracts
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
