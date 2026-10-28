@@ -1,4 +1,4 @@
-# Anyscale (anyscale)
+# Anyscale
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,56 +66,118 @@
 
 Anyscale provides a managed Ray platform for distributed Python, ML training, and large-scale inference. Built by the creators of Ray, the Anyscale Platform API and CLI expose programmatic control over workspaces, jobs, services, clusters, compute configurations, container images, and clouds (Hosted and Bring-Your-Own-Cloud).
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/anyscale/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · Distributed Computing · Ray · ML Platform · Inference · GPU
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=anyscale-api-evangelist&utm_content=repo)
+## Anyscale on APIs.io
 
-## Type
+Everything profiled for Anyscale is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/anyscale/](https://apis.io/providers/anyscale/)** — or go straight to one of the APIs or properties below.
 
-- **x-type:** company
+### APIs (10)
 
-## Tags:
+- [Anyscale Workspaces API](https://apis.io/apis/anyscale/anyscale-workspaces-api/) — Manages Anyscale Workspaces - cloud-hosted, GPU-backed development environments preconfigured with Ray for interactive development and debugging.
+- [Anyscale Jobs API](https://apis.io/apis/anyscale/anyscale-jobs-api/) — Submits, monitors, and manages Ray Jobs - one-off or scheduled batch runs of Python applications on managed Ray clusters.
+- [Anyscale Services API](https://apis.io/apis/anyscale/anyscale-services-api/) — Deploys and manages production Ray Serve applications as long-running, autoscaling, multi-version services with traffic-shifted rollouts and HTTP/gRPC ingress.
+- [Anyscale Clusters API](https://apis.io/apis/anyscale/anyscale-clusters-api/) — Provisions and manages Ray clusters - autoscaling fleets of CPU / GPU nodes underlying Workspaces, Jobs, and Services.
+- [Anyscale Compute Configs API](https://apis.io/apis/anyscale/anyscale-compute-configs-api/) — Defines reusable compute templates (head node type, worker types, autoscaling, AWS/GCP region) for clusters, workspaces, jobs, and services.
+- [Anyscale Container Images API](https://apis.io/apis/anyscale/anyscale-container-images-api/) — Builds, tags, and manages container images that bundle Python, system, and Ray dependencies for reproducible runtime environments.
+- [Anyscale Clouds API](https://apis.io/apis/anyscale/anyscale-clouds-api/) — Manages Hosted and Bring-Your-Own-Cloud (BYOC) cloud connections to AWS and GCP accounts where Anyscale provisions Ray clusters.
+- [Anyscale Projects API](https://apis.io/apis/anyscale/anyscale-projects-api/) — Groups workspaces, jobs, services, and resources into projects with shared access controls, dashboards, and quotas.
+- [Anyscale Organizations API](https://apis.io/apis/anyscale/anyscale-organizations-api/) — Manages organizations, users, roles, IAM, and billing relationships at the tenancy level.
+- [Anyscale Logs and Monitoring API](https://apis.io/apis/anyscale/anyscale-logs-api/) — Retrieves cluster, job, and service logs, metrics, and Ray dashboard data for observability and debugging.
 
- - AI, Distributed Computing, Ray, ML Platform, Inference, GPU
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-08
+#### GraphQL (1)
 
-## APIs
+GraphQL schemas.
 
-| API | Description |
-|---|---|
-| Anyscale Workspaces API | Cloud-hosted GPU development environments preconfigured with Ray. |
-| Anyscale Jobs API | Submits, monitors, and manages Ray Jobs (batch / scheduled). |
-| Anyscale Services API | Production Ray Serve deployments with autoscaling and rollouts. |
-| Anyscale Clusters API | Provisions and manages autoscaling Ray clusters. |
-| Anyscale Compute Configs API | Reusable compute templates (head/worker types, region). |
-| Anyscale Container Images API | Custom container images for Ray runtime environments. |
-| Anyscale Clouds API | Hosted and BYOC cloud connections to AWS / GCP. |
-| Anyscale Projects API | Project-level grouping with shared access controls. |
-| Anyscale Organizations API | Organizations, IAM, roles, and billing. |
-| Anyscale Logs and Monitoring API | Logs, metrics, and Ray dashboard access. |
+- [Moved to /providers/anyscale/](https://apis.io/graphqls/anyscale/anyscale-graphql/)
 
-## Common Properties
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Anyscale Domain Security](https://apis.io/security/anyscale/anyscale-domain-security/)
+- [Anyscale Trust Center](https://apis.io/security/anyscale/anyscale-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Anyscale Plans Pricing](https://apis.io/plans/anyscale/anyscale-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Anyscale Rate Limits](https://apis.io/rate-limits/anyscale/anyscale-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Anyscale Finops](https://apis.io/finops/anyscale/anyscale-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.anyscale.com/)
 - [Documentation](https://docs.anyscale.com/)
-- [Plans](plans/anyscale-plans-pricing.yml) — API Commons Plans 0.1
-- [RateLimits](rate-limits/anyscale-rate-limits.yml) — API Commons Rate Limits 0.1
-- [FinOps](finops/anyscale-finops.yml) — FOCUS-aligned FinOps Framework 1.0
+- [Pricing](https://www.anyscale.com/pricing)
+- [GitHub](https://github.com/anyscale)
 
-## Artifacts
+## API Evangelist rating
 
-| Artifact | Path | Notes |
-|---|---|---|
-| Plans | `plans/anyscale-plans-pricing.yml` | Hosted hourly rates (CPU, T4, L4, A10G, A100, H100, H200), BYOC, Enterprise. |
-| Rate Limits | `rate-limits/anyscale-rate-limits.yml` | Pending - bounded primarily by AWS / GCP quotas. |
-| FinOps | `finops/anyscale-finops.yml` | FOCUS-aligned, instance-hour meters per GPU class; BYOC dual-provider notes. |
+**Kin Score 21.7** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 16.0 |
+| Access clarity | 50.0 |
 
-**FN:** Kin Lane
+**Agent readiness 3.9** — human-only
 
-**Email:** kin@apievangelist.com
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | unknown |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.0** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/anyscale/](https://apis.io/providers/anyscale/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Anyscale: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/anyscale/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
